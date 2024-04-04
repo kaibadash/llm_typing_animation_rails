@@ -7,7 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("start subscibe ChatChannel");
   consumer.subscriptions.create("ChatChannel", {
     received(data) {
-      console.log(data); // ここで受け取ったデータをフロントエンドでどうにかする
+      console.log(data);
+      // div id="chat-response"></div> に反映する
+      const chatResponse = document.getElementById("chat-response");
+      if (data == null) {
+        return;
+      }
+      chatResponse.innerHTML += data;
     },
   });
 
