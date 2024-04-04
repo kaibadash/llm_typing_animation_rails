@@ -10,7 +10,8 @@ class ChatGptService
             model: "gpt-4",
             messages: [{ role: "user", content: message}],
             stream: proc do |chunk, _bytesize|
-                print chunk.dig("choices", 0, "delta", "content")
+                # ここでActionCableを使用してフロントエンドにデータを送信
+                ActionCable.server.broadcast("chat_channel", chunk.dig("choices", 0, "delta", "content"))
             end
         }
     )
