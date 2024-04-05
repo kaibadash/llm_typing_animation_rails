@@ -11,6 +11,7 @@ class ChatGptService
             messages: [{ role: "user", content: message}],
             stream: proc do |chunk, _bytesize|
                 # ここでActionCableを使用してフロントエンドにデータを送信
+                # TODO: broadcastだと全員に送られてしまうのでここは要修正
                 ActionCable.server.broadcast("chat_channel", chunk.dig("choices", 0, "delta", "content"))
             end
         }
