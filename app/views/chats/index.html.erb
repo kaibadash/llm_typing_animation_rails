@@ -1,0 +1,21 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Chats</h1>
+
+<%= form_with(url: "/chats", method: "post", id: "chat-form", local: false) do |form| %>
+  <%= form.text_area :message, id: "chat-message", autocomplete: "off" %>
+  <%= form.submit "送信" %>
+<% end %>
+
+<pre id="chat-response" style="font-size: 3em;"></pre>
+
+<div id="chats">
+  <% @chats.each do |chat| %>
+    <%= render chat %>
+    <p>
+      <%= link_to "Show this chat", chat %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New chat", new_chat_path %>
