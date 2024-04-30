@@ -62,7 +62,8 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
-  gem "factory_bot_rails"
+  gem "rubocop"
+  gem "rubocop-rails"
 end
 
 group :test do
