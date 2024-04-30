@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class ChatsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_chat, only: %i(show edit update destroy)
 
   # GET /chats or /chats.json
   def index
+    @current_user = current_user
     @chats = Chat.all
   end
 
