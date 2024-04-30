@@ -73,4 +73,13 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+  config.action_cable.allowed_request_origins = ['http://localhost:4000']
+  # 本番ではだめですよ
+  # config.action_cable.disable_request_forgery_protection = true
+
+  # productionではwss://を使うこと
+  # config.action_cable.mount_path = nil
+  config.action_cable.url = "ws://localhost:28080"
+
+  config.active_job.queue_adapter = :sidekiq
 end

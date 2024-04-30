@@ -22,8 +22,9 @@ class ChatsController < ApplicationController
   # POST /chats or /chats.json
   def create
     message = params[:message]
-    response = ChatGptService.chat(message) # ChatGptServiceを使用してChatGPT APIを呼び出す
-    render json: { response: response }
+    ChatGptJob.perform_later(message)
+    # response = ChatGptService.chat(message)
+    # render json: { response: response }
   end
 
   # PATCH/PUT /chats/1 or /chats/1.json
