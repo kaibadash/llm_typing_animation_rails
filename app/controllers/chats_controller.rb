@@ -24,7 +24,7 @@ class ChatsController < ApplicationController
   # POST /chats or /chats.json
   def create
     message = params[:message]
-    ChatGptJob.perform_later(message)
+    ChatGptJob.perform_later(current_user.id, message)
     # response = ChatGptService.chat(message)
     # render json: { response: response }
   end

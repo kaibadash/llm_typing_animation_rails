@@ -1,5 +1,6 @@
 ```
 # redis
+docker compose up -d
 
 # web
 bundle install

@@ -1,14 +1,21 @@
-# frozen_string_literal: true
-
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
-    identified_by :unique_identifier
+    identified_by :current_user
 
     def connect
-      self.unique_identifier = SecureRandom.uuid
-      # ここでユーザーを一意に識別するための任意の方法を設定します。
-      # 例えば、セッションIDやクッキーからユーザーIDを取得するなど。
-      # 認証が不要な場合は、上記のようにランダムなUUIDを使用しても構いません。
+      self.current_user = find_current_user
     end
+
+    private
+
+      def find_current_user
+        current_user = env['warden'].user
+        Rails.logger.info("find_current_user: #{current_user&.email}")
+        if current_user.blank?
+          return reject_unauthorized_connection
+        end
+
+        current_user
+      end
   end
 end

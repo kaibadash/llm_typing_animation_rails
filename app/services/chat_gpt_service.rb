@@ -3,8 +3,8 @@
 require "openai"
 
 class ChatGptService
-  def self.chat(message)
-    return dummy_gpt
+  def self.chat(user_id, message)
+    return dummy_gpt(user_id)
 
     client = OpenAI::Client.new(access_token: ENV["CHAT_GPT_API_KEY"])
     # https://platform.openai.com/docs/models/overview
@@ -25,10 +25,13 @@ class ChatGptService
     )
   end
 
-  def self.dummy_gpt
-    Rails.logger.info("start chat")
-    100.times do |i|
-      ActionCable.server.broadcast("chat_channel", "感謝の正拳突き! #{i}<br>")
+  def self.dummy_gpt(user_id)
+    current_user = User.find(user_id)
+    Rails.logger.info("start send message to #{current_user.email}")
+    "#{current_user.email.split("@")[0]}さん、こんにちは。これはダミーメッセージです。メッセージは以上です。".chars.each do |char|
+      sleep(Random.rand(0..0.2))
+      Rails.logger.info("broadcast #{char}")
+      ChatChannel.broadcast_to(current_user, char)
     end
   end
 end
