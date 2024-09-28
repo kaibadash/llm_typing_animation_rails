@@ -15,10 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(data.index, data.content);
       arr[data.index] = data.content;
       // index番号を考慮しない版
-      // chatResponse.innerHTML = data.content;
+      chatResponse.innerHTML += data.content || "";
 
       // index番号を考慮する版
-      chatResponse.innerHTML = arr.join("");
+      // chatResponse.innerHTML = arr.join("");
       if (data.status == "finished") {
         console.log("finished");
       }

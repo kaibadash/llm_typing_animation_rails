@@ -5,7 +5,7 @@ require "openai"
 class ChatGpt
   def self.chat(user_id, message)
     user = User.find(user_id)
-    #return dummy_gpt(user, message)
+    # return dummy_gpt(user, message)
     chat_gpt(user, message)
   end
 
@@ -22,7 +22,7 @@ class ChatGpt
         model: "gpt-4o-mini",
         messages: [{ role: "user", content: prompt }],
         stream: proc do |chunk, _bytesize|
-          Rails.logger.info(chunk)
+          Rails.logger.debug(chunk)
           ChatChannel.broadcast_to(user, {
             index: index,
             status: chunk.dig("choices", 0, "finish_reason").present? ? :finished : :progress,
@@ -36,7 +36,7 @@ class ChatGpt
 
   # @deprecated
   def self.dummy_gpt(user, message)
-    Rails.logger.info("start send message to #{user.email} #{message}")
+    Rails.logger.debug("start send message to #{user.email} #{message}")
     index = 0
     100.times do
       "Kaigi on Rails! ".scan(/.{1,2}/).each do |chunk|
