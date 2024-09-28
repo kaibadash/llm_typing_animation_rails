@@ -5,8 +5,8 @@ require "openai"
 class ChatGpt
   def self.chat(user_id, message)
     user = User.find(user_id)
-    # return dummy_gpt(user, message)
-    lm_studio(user, message)
+    return dummy_gpt(user, message)
+    #lm_studio(user, message)
   end
 
   def self.chat_gpt(user, prompt)
@@ -28,10 +28,10 @@ class ChatGpt
   end
 
   # @deprecated
-  def self.dummy_gpt(user)
-    Rails.logger.info("start send message to #{user.email}")
+  def self.dummy_gpt(user, message)
+    Rails.logger.info("start send message to #{user.email} #{message}")
     100.times do
-      "Kaigi on Rails!".chars.each do |chunk|
+      "Kaigi on Rails! ".chars.each do |chunk|
         ChatChannel.broadcast_to(user, chunk)
       end
     end

@@ -3,13 +3,15 @@
 <h1>Chats</h1>
 
 <p>
-Logged in as <%= @current_user.email %>
+Welcome to <%= @current_user.email.split("@").first %>!
 </p>
 
 <%= form_with(url: "/chats", method: "post", id: "chat-form", local: false) do |form| %>
-  <%= form.text_area :message, id: "chat-message", autocomplete: "off" %>
-  <%= form.submit "送信" %>
+  <%= form.text_area :message, id: "chat-message", autocomplete: "off", style: "width: 80%; height: 200px;" %>
+  <%= form.submit "送信", style: "width: 80%; height: 50px;" %>
 <% end %>
+
+
 
 <p id="chat-response" style="font-size: 3em; word-wrap: break-word;"></p>
 
@@ -22,4 +24,16 @@ Logged in as <%= @current_user.email %>
   <% end %>
 </div>
 
-<%= link_to "New chat", new_chat_path %>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.getElementById("chat-form");
+        const textArea = document.getElementById("chat-message");
+
+        textArea.addEventListener("keydown", function(event) {
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault(); // 改行を防ぐ
+                form.submit(); // フォーム送信
+            }
+        });
+    });
+</script>
