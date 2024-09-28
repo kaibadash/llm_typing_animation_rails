@@ -24,10 +24,15 @@ class ChatGpt
         stream: proc do |chunk, _bytesize|
           Rails.logger.debug(chunk)
           ChatChannel.broadcast_to(user, {
-            index: index,
-            status: chunk.dig("choices", 0, "finish_reason").present? ? :finished : :progress,
-            content: chunk.dig("choices", 0, "delta", "content")
-          })
+                                     index:,
+                                     status: if chunk.dig("choices", 0,
+                                                          "finish_reason").present?
+                                               :finished
+                                             else
+                                               :progress
+                                             end,
+                                     content: chunk.dig("choices", 0, "delta", "content"),
+                                   })
           index += 1
         end,
       },
@@ -40,10 +45,10 @@ class ChatGpt
     index = 0
     100.times do
       "Kaigi on Rails! ".scan(/.{1,2}/).each do |chunk|
-        ChatChannel.broadcast_to(user, { index: index, status: :progress, content: chunk })
+        ChatChannel.broadcast_to(user, { index:, status: :progress, content: chunk })
         index += 1
       end
     end
-    ChatChannel.broadcast_to(user, { index: index, status: :finished })
+    ChatChannel.broadcast_to(user, { index:, status: :finished })
   end
 end
