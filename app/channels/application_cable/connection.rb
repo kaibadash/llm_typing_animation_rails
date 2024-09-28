@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
     identified_by :current_user
@@ -8,14 +10,12 @@ module ApplicationCable
 
     private
 
-      def find_current_user
-        current_user = env['warden'].user
-        Rails.logger.info("find_current_user: #{current_user&.email}")
-        if current_user.blank?
-          return reject_unauthorized_connection
-        end
+    def find_current_user
+      current_user = env["warden"].user
+      Rails.logger.info("find_current_user: #{current_user&.email}")
+      return reject_unauthorized_connection if current_user.blank?
 
-        current_user
-      end
+      current_user
+    end
   end
 end

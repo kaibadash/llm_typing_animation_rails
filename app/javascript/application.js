@@ -4,7 +4,7 @@ import "controllers";
 import consumer from "./channels/consumer";
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("start subscibe ChatChannel");
+  console.log("start subscribe ChatChannel");
   consumer.subscriptions.create("ChatChannel", {
     received(data) {
       // TODO:サーバサイドから切断できる？

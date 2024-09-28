@@ -11,7 +11,7 @@ Logged in as <%= @current_user.email %>
   <%= form.submit "送信" %>
 <% end %>
 
-<pre id="chat-response" style="font-size: 3em;"></pre>
+<p id="chat-response" style="font-size: 3em; word-wrap: break-word;"></p>
 
 <div id="chats">
   <% @chats.each do |chat| %>
