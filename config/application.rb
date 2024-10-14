@@ -23,5 +23,7 @@ module LlmTypingAnimationRails
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.action_cable.mount_path = '/websocket'
   end
 end
