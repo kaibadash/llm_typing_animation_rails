@@ -1,4 +1,7 @@
 ```
+cp .env.example
+vi .env # edit .env
+
 # redis
 docker compose up -d
 
