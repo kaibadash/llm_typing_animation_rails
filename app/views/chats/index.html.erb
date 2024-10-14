@@ -7,13 +7,11 @@ Welcome to <%= @current_user.email.split("@").first %>!
 </p>
 
 <%= form_with(url: "/chats", method: "post", id: "chat-form", local: false) do |form| %>
-  <%= form.text_area :message, id: "chat-message", autocomplete: "off", style: "width: 80%; height: 200px;" %>
+  <%= form.text_area :message, id: "chat-message", autocomplete: "off", style: "width: 80%; height: 100px;" %>
   <%= form.submit "送信", style: "width: 80%; height: 50px;" %>
 <% end %>
 
-
-
-<p id="chat-response" style="font-size: 3em; word-wrap: break-word;"></p>
+<p id="chat-response" style="border: solid; font-size: 2em; word-wrap: break-word; min-height: 100px; max-height:300px; overflow: scroll;"></p>
 
 <div id="chats">
   <% @chats.each do |chat| %>
@@ -25,15 +23,4 @@ Welcome to <%= @current_user.email.split("@").first %>!
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const form = document.getElementById("chat-form");
-        const textArea = document.getElementById("chat-message");
-
-        textArea.addEventListener("keydown", function(event) {
-            if (event.key === "Enter" && !event.shiftKey) {
-                event.preventDefault(); // 改行を防ぐ
-                form.submit(); // フォーム送信
-            }
-        });
-    });
 </script>
