@@ -1,4 +1,10 @@
+require 'sidekiq/web'
 Rails.application.routes.draw do
+  root to: 'homes#top'
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
+
   resources :chats
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -6,6 +12,11 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # Action Cable のエンドポイントをマウント
+  mount ActionCable.server => '/cable'
+
   # Defines the root path route ("/")
   # root "posts#index"
+
+  mount Sidekiq::Web => '/sidekiq'
 end

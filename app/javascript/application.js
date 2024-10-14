@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("start subscibe ChatChannel");
   consumer.subscriptions.create("ChatChannel", {
     received(data) {
+      // TODO:サーバサイドから切断できる？
+      // data = {type:"message", text="犬"}
+      // data = {type:"disconnect"}
       console.log(data);
       const chatResponse = document.getElementById("chat-response");
       if (data == null) {
@@ -33,24 +36,12 @@ document.addEventListener("DOMContentLoaded", () => {
         "X-CSRF-Token": document.querySelector("[name=csrf-token]").content,
       },
       body: JSON.stringify({ message: message }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        displayTypingAnimation(data.response, "chat-response", 50); // Typing Animationを表示
-      });
+    });
+    // .then((response) => response.json())
+    // .then((data) => {
+    //   displayTypingAnimation(data.response, "chat-response", 50); // Typing Animationを表示
+    // });
 
     messageInput.value = ""; // メッセージ入力をクリア
   });
-
-  function displayTypingAnimation(text, elementId, speed) {
-    let i = 0;
-    const interval = setInterval(() => {
-      if (i < text.length) {
-        document.getElementById(elementId).innerHTML += text.charAt(i);
-        i++;
-      } else {
-        clearInterval(interval);
-      }
-    }, speed);
-  }
 });

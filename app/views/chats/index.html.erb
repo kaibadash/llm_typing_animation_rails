@@ -2,6 +2,10 @@
 
 <h1>Chats</h1>
 
+<p>
+Logged in as <%= @current_user.email %>
+</p>
+
 <%= form_with(url: "/chats", method: "post", id: "chat-form", local: false) do |form| %>
   <%= form.text_area :message, id: "chat-message", autocomplete: "off" %>
   <%= form.submit "送信" %>
