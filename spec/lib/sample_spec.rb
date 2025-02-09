@@ -9,7 +9,7 @@ RSpec.describe ChatGpt, type: :model do
 
   describe ".chat" do
     let!(:user) { create(:user) }
-    let!(:message) { "二千二十四は数字でいうと? 数字のみ出力してください。" }
+    let!(:message) { "sample" }
     let!(:chat) { create(:chat) }
 
     it "got LLM response", :vcr do
