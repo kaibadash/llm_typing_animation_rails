@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ChatGpt, type: :model do
+RSpec.describe "sample", type: :model do
   before do
     allow(ChatChannel).to receive(:broadcast_to)
   end
